@@ -89,7 +89,7 @@ object FeaturesMLlibSpark {
     val tfidf: RDD[Vector] = idf.transform(tf)
 //    tfidf.take(20).foreach(println)
 
-    tfidf.coalesce(1).saveAsTextFile(Globals.masterHDFS+"/try")
+    tfidf.coalesce(1).saveAsTextFile(Globals.masterHDFS+"/try/hash1")
     sc.stop()
   }
 }
