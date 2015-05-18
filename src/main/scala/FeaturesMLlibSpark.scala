@@ -1,5 +1,6 @@
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
+import Globals
 
 /**
  * Created by Favio on 18/05/15.
@@ -9,7 +10,7 @@ object FeaturesMLlibSpark {
 
  val conf = new SparkConf()
 //      .setMaster("local")
-    .setMaster("mesos://master.mcbo.mood.com.ve:5050")
+    .setMaster(Globals.masterSpark)
     .setAppName("Basic Statistics MLlib")
     .set("spark.executor.memory", "12g")
   val sc = new SparkContext(conf)
@@ -65,7 +66,10 @@ object FeaturesMLlibSpark {
    */
 
    // Load documents (one per line).
-  val documents: RDD[Seq[String]] = sc.textFile("hdfs://")
+  val documents: RDD[Seq[String]] = sc.textFile(Globals.masterHDFS +
+    "/try/DonQuijote.txt").map(_.split(" ").toSeq)
+
+  
 
 
 
