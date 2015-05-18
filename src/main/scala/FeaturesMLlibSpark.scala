@@ -1,3 +1,4 @@
+import org.apache.spark.mllib.feature.HashingTF
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import Globals
@@ -67,11 +68,10 @@ object FeaturesMLlibSpark {
 
    // Load documents (one per line).
   val documents: RDD[Seq[String]] = sc.textFile(Globals.masterHDFS +
-    "/try/DonQuijote.txt").map(_.split(" ").toSeq)
+  "/try/DonQuijote.txt").map(_.split(" ").toSeq)
 
-  
-
-
+  val hashingTF = new HashingTF()
+  val tf: RDD[Vector] = hashingTF.transform(documents)
 
   sc.stop()
 }
