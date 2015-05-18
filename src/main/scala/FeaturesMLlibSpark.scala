@@ -1,4 +1,4 @@
-import org.apache.spark.mllib.feature.HashingTF
+import org.apache.spark.mllib.feature.{IDF, HashingTF}
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -13,8 +13,8 @@ object FeaturesMLlibSpark {
   def main(args: Array[String]) {
 
     val conf = new SparkConf()
-      //      .setMaster("local")
-      .setMaster(Globals.masterSpark)
+            .setMaster("local")
+//      .setMaster(Globals.masterSpark)
       .setAppName("Basic Statistics MLlib")
       .set("spark.executor.memory", "6g")
     val sc = new SparkContext(conf)
@@ -76,8 +76,20 @@ object FeaturesMLlibSpark {
     val hashingTF = new HashingTF()
     val tf: RDD[Vector] = hashingTF.transform(documents)
 
-    tf.take(20).foreach(println)
+//    tf.take(20).foreach(println)
 
+    /**
+     * While applying HashingTF only needs a single pass to the data,
+     * applying IDF needs two passes: first to compute the IDF vector
+     * and second to scale the term frequencies by IDF.
+     */
+
+    tf.cache()
+    val idf = new IDF().fit(tf)
+    val tfidf: RDD[Vector] = idf.transform(tf)
+//    tfidf.take(20).foreach(println)
+
+    tfidf.coalesce(1).saveAsTextFile(Globals.masterHDFS+"/try")
     sc.stop()
   }
 }
