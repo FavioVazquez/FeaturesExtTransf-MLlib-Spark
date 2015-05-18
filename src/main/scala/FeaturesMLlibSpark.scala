@@ -90,6 +90,20 @@ object FeaturesMLlibSpark {
 //    tfidf.take(20).foreach(println)
 
     tfidf.coalesce(1).saveAsTextFile(Globals.masterHDFS+"/try/hash1")
+
+    /**
+     * MLlib’s IDF implementation provides an option for ignoring terms
+     * which occur in less than a minimum number of documents. In such
+     * cases, the IDF for these terms is set to 0. This feature can be
+     * used by passing the minDocFreq value to the IDF constructor.
+     *
+     */
+
+    val idf1 = new IDF(minDocFreq = 2).fit(tf)
+    val tfidf1: RDD[Vector] = idf1.transform(tf)
+
+    tfidf.coalesce(1).saveAsTextFile(Globals.masterHDFS+"/try/hash2")
+
     sc.stop()
   }
 }
