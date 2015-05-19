@@ -159,6 +159,9 @@ object FeaturesMLlibSpark {
 
     val synonyms = model.findSynonyms("china",40)
 
+    for ((synonym, cosineSimilarity) <- synonyms){
+      println(s"$synonym $cosineSimilarity")
+    }
 
     sc.stop()
   }
