@@ -13,9 +13,9 @@ object FeaturesMLlibSpark {
   def main(args: Array[String]) {
 
     val conf = new SparkConf()
-            .setMaster("local")
-//      .setMaster(Globals.masterSpark)
-      .setAppName("Basic Statistics MLlib")
+//            .setMaster("local")
+      .setMaster(Globals.masterSpark)
+      .setAppName("Feature Extraction and Transformation")
       .set("spark.executor.memory", "6g")
     val sc = new SparkContext(conf)
 
