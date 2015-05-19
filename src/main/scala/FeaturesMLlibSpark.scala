@@ -16,7 +16,7 @@ object FeaturesMLlibSpark {
 //            .setMaster("local")
       .setMaster(Globals.masterSpark)
       .setAppName("Feature Extraction and Transformation")
-      .set("spark.executor.memory", "6g")
+      .set("spark.executor.memory", "13g")
     val sc = new SparkContext(conf)
 
 
