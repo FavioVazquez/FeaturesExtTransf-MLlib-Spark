@@ -1,5 +1,4 @@
-import org.apache.spark.ml.feature.{Word2VecModel, Word2Vec}
-import org.apache.spark.mllib.feature.{IDF, HashingTF}
+import org.apache.spark.mllib.feature.{Word2Vec, IDF, HashingTF}
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.rdd._
 import org.apache.spark.{SparkConf, SparkContext}
